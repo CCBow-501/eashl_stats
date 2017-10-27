@@ -25,6 +25,22 @@ public class EashlRoutes extends RouteBuilder {
 			.to("https://www.easports.com/iframe/nhl14proclubs/api/platforms/ps4/clubs/")
 			.routeId("TeamInformationRoute");
 
+
+		from("direct:getTeamStats")
+			.process(new Processor() {
+
+				@Override
+				public void process(Exchange exchange) throws Exception {
+					int clubId = exchange.getIn().getHeader("clubId", Integer.class);
+					exchange.getIn().setHeader(Exchange.HTTP_URI, "https://www.easports.com/iframe/nhl14proclubs/api/platforms/ps4/clubs/"+clubId+"/stats");
+				}
+			})
+			.log("we are in the TeamStatsRoute route") //
+			.setHeader(Exchange.HTTP_METHOD, constant("GET"))//
+
+			.to("https://www.easports.com/iframe/nhl14proclubs/api/platforms/ps4/clubs/")
+			.routeId("TeamStatsRoute");
+
 	}
 
 }

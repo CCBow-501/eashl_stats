@@ -22,6 +22,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 
 import de.roed.eashl.web.model.Team;
+import de.roed.eashl.web.model.TeamStatistic;
 
 @RestController
 @RequestMapping(value = "/team/v1")
@@ -52,6 +53,28 @@ public class TeamController {
 
 		}
 		return teamList;
+	}
+
+
+	@RequestMapping(path="stats/{clubId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public TeamStatistic getTeamStats(@PathVariable("clubId") String name) {
+		ProducerTemplate template = camelContext.createProducerTemplate();
+
+		Map<String, Object> headerMap = new HashMap<String, Object>();
+		headerMap.put("clubId", name);
+
+		String body = template.requestBodyAndHeaders("direct:getTeamStats", null, headerMap, String.class);
+		log.debug(body);
+		Gson gson = new Gson();
+		TeamStatistic teamStats = null;
+		if (body != null && !body.equals("")) {
+			JsonObject jsonObject = gson.fromJson(body, JsonObject.class);
+//			JsonArray jsonArray = (JsonArray) jsonObject.get("raw");
+			log.debug("body = " + jsonObject.toString());
+
+
+		}
+		return teamStats;
 	}
 
 }
