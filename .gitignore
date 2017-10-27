@@ -1,25 +1,21 @@
-.gradle
-/build/
-!gradle/wrapper/gradle-wrapper.jar
-
-### STS ###
-.apt_generated
-.classpath
-.factorypath
+bin/
 .project
-.settings
-.springBeans
-
-### IntelliJ IDEA ###
-.idea
-*.iws
-*.iml
-*.ipr
-
-### NetBeans ###
-nbproject/private/
+.settings/
+.classpath
+.gradle
 build/
-nbbuild/
-dist/
-nbdist/
-.nb-gradle/
+classes/
+.DS_Store
+
+# IntelliJ stuff
+.idea/
+*.iml
+out/
+
+# Vagrant
+.vagrant
+/bin-test/
+
+# Databases
+*.sql~
+target/
